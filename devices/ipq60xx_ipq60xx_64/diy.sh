@@ -23,7 +23,7 @@ CONFIG_FEED_ipq807x=n
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/feeds/ipq807x/hostapd/Makefile
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/network/config/netifd/Makefile
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/system/procd/Makefile
-sed -i "s/PKG_NAME:=iw/PKG_NAME:=iw\nPKG_SOURCE_DATE:=2099-12-06/" package/network/utils/iw/Makefile
+sed -i "s/ath5k ath6kl ath6kl-sdio ath6kl-usb ath9k ath9k-common ath9k-htc ath10k //" package/feeds/ipq807x/mac80211/ath.mk
 
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool kmod-sched-cake wpad-openssl/' target/linux/ipq60xx/Makefile
 
@@ -32,15 +32,12 @@ sed -i "/KernelPackage,fs-xfs/d" package/kernel/linux/modules/fs.mk
 sed -i "/KernelPackage,br-netfilter/d" package/kernel/linux/modules/netfilter.mk
 sed -i "/KernelPackage,switch-ar8xxx/d" package/kernel/linux/modules/netdevices.mk
 
-
-
 #rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,wireguard,fullconenat}
-rm -rf feeds/kiddin9/{base-files,fullconenat-nft,oaf,rkp-ipid,shortcut-fe}
-#svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/network/services/fullconenat feeds/kiddin9/fullconenat
+rm -rf feeds/kiddin9/{base-files,fullconenat-nft,oaf,rkp-ipid,shortcut-fe} package/feeds/packages/{v4l2loopback,ovpn-dco,libpfring} package/kernel/{nat46,ath10k-ct,button-hotplug} package/feeds/ipq807x/{wireguard,batman-adv} package/kernel/mt76
+rm -rf package/feeds/ipq807x/qca-diag
+sed -i "s/SUBTARGET:=generic/SUBTARGET:=ipq60xx_64/" target/linux/ipq60xx/generic/target.mk
 
-#rm -rf package/kernel/{ath10k-ct,mt76,rtl8812au-ct}
-#rm -rf feeds/packages/net/xtables-addons package/feeds/packages/{openvswitch,ksmbd} package/feeds/routing/batman-adv
+mv -f target/linux/ipq60xx/generic target/linux/ipq60xx/ipq60xx_64
 
-#rm -rf package/kernel/exfat
+sed -i "s/SUBTARGETS:=generic /SUBTARGETS:=ipq60xx_64 /" target/linux/ipq60xx/Makefile
 
-#ln -sf $(pwd)/feeds/luci/modules/luci-base package/feeds/kiddin9/
